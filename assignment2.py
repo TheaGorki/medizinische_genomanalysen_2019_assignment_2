@@ -18,14 +18,12 @@ class Assignment2:
         self.chr21_file= file_1
         self.chr22_file = file_2
 
-
     def get_average_quality_of_file(self):
         '''
         Get the average PHRED quality of all variants
         :return:
         '''
         self.read_vcf_chr22 = vcf.Reader(open(self.chr22_file, 'r'))
-
         sum_score=0
         count_vcf=0
         for record in self.read_vcf_chr22:
@@ -51,7 +49,15 @@ class Assignment2:
         Return the variant caller name
         :return: 
         '''
-        print("TODO")
+        self.read_vcf_chr22 = vcf.Reader(open(self.chr22_file, 'r'))
+        List_Caller= []
+        for record in self.read_vcf_chr22:
+            Callsetnames= record.INFO['callsetnames']
+            for i in Callsetnames:
+                if i not in List_Caller:
+                    List_Caller.append(i)
+
+        print("Name of variant callers are: %s" % List_Caller)
         
         
     def get_human_reference_version(self):
@@ -99,6 +105,8 @@ class Assignment2:
         print("Print all results here:")
         self.get_average_quality_of_file()
         self.get_total_number_of_variants_of_file()
+        self.get_variant_caller_of_vcf()
+        self.get_human_reference_version()
     
     
 def main():
